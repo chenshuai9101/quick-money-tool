@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "office-document-specialist-suite": {
+      "version": "1.0.2",
+      "installedAt": 1776149943804
+    },
+    "ppt-generator": {
+      "version": "1.0.0",
+      "installedAt": 1776150005143
+    }
+  }
+}
