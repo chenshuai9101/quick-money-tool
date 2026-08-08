@@ -6,12 +6,11 @@
 
 import json
 import os
-import time
 import yaml
+from typing import Dict, Any, Optional
 from datetime import datetime
 from pathlib import Path
 from enum import Enum
-from typing import Dict, List, Any, Optional
 
 class WorkflowStatus(Enum):
     PENDING = "pending"
@@ -244,4 +243,66 @@ class WorkflowEngine:
             print(f"加载工作流实例失败 {instance_id}: {e}")
             return None
     
-    def execute_step(self, instance_id: str, step_input: Dict
+    def execute_step(self, instance_id: str, step_input: Dict[str, Any]) -> Dict[str, Any]:
+        """执行工作流实例的当前步骤"""
+        if instance_id not in self.instances:
+            instance = self.load_instance(instance_id)
+            if not instance:
+                return {"status": "error", "message": f"工作流实例不存在: {instance_id}"}
+        instance = self.instances[instance_id]
+        
+        if instance.status != WorkflowStatus.RUNNING:
+            instance.start()
+        
+        step = instance.workflow.get_step(instance.current_step)
+        if not step:
+            instance.fail(f"步骤 {instance.current_step} 不存在")
+            return {
+                "status": "failed",
+                "error": f"步骤 {instance.current_step} 不存在",
+                "instance_id": instance_id
+            }
+        
+        # 模拟步骤执行：将输入透传为输出
+        step_result = {
+            "step_index": instance.current_step,
+            "step_name": step.name,
+            "status": "completed",
+            "input": step_input,
+            "output": step_input,
+            "completed_at": datetime.now().isoformat()
+        }
+        instance.complete_step(step_result)
+        self.save_instance(instance)
+        
+        return {
+            "status": "completed",
+            "instance_id": instance_id,
+            "current_step": instance.current_step,
+            "step_result": step_result
+        }
+    
+    def run_workflow(self, workflow_id: str, task_data: Dict[str, Any]) -> Dict[str, Any]:
+        """执行完整工作流"""
+        instance = self.create_instance(workflow_id, task_data)
+        if not instance:
+            return {"status": "error", "message": f"无法创建工作流实例: {workflow_id}"}
+        
+        result = {
+            "instance_id": instance.instance_id,
+            "workflow_id": workflow_id,
+            "steps": []
+        }
+        
+        instance.start()
+        
+        while instance.current_step < len(instance.workflow.steps):
+            step_result = self.execute_step(instance.instance_id, task_data)
+            result["steps"].append(step_result.get("step_result", step_result))
+            
+            if instance.status in (WorkflowStatus.COMPLETED, WorkflowStatus.FAILED):
+                break
+        
+        result["status"] = instance.status.value
+        result["completed_at"] = instance.end_time.isoformat() if instance.end_time else None
+        return result

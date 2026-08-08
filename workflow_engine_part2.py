@@ -4,16 +4,14 @@
 """
 
 import json
-import os
 import time
 import yaml
 from datetime import datetime
 from pathlib import Path
-from enum import Enum
 from typing import Dict, List, Any, Optional
 
 # 导入第一部分
-from workflow_engine import Workflow, WorkflowInstance, WorkflowStatus, WorkflowEngine
+from workflow_engine import WorkflowInstance, WorkflowStatus, WorkflowEngine
 
 class EnhancedWorkflowEngine(WorkflowEngine):
     def __init__(self, workflows_dir: str = "~/.openclaw/company/workflows"):

@@ -5,13 +5,10 @@
 目标：24小时内赚取5元人民币
 """
 
-import sys
-import os
 import json
 import time
 from datetime import datetime
 import webbrowser
-import subprocess
 
 class QuickMoneyTool:
     def __init__(self):
@@ -77,7 +74,7 @@ class QuickMoneyTool:
         progress = (earnings / self.target_amount) * 100
         elapsed = (datetime.now() - self.start_time).total_seconds() / 3600  # 小时
         
-        print(f"\n📈 进度报告：")
+        print("\n📈 进度报告：")
         print(f"   目标金额：{self.target_amount} 元")
         print(f"   已赚金额：{earnings} 元")
         print(f"   完成进度：{progress:.1f}%")
@@ -125,7 +122,7 @@ class QuickMoneyTool:
         with open("money_progress.json", "w", encoding="utf-8") as f:
             json.dump(progress_data, f, ensure_ascii=False, indent=2)
             
-        print(f"\n💾 进度已保存到 money_progress.json")
+        print("\n💾 进度已保存到 money_progress.json")
         
     def open_platform_links(self):
         """尝试打开平台链接（如果环境允许）"""

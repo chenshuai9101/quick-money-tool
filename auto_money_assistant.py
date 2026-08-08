@@ -7,7 +7,6 @@ import json
 import time
 import random
 from datetime import datetime
-import sys
 
 class AutoMoneyAssistant:
     def __init__(self):
@@ -96,7 +95,7 @@ class AutoMoneyAssistant:
         
     def generate_earning_plan(self, target_amount=5, available_time=120):
         """生成赚钱计划"""
-        print(f"\n🎯 生成赚钱计划")
+        print("\n🎯 生成赚钱计划")
         print(f"   目标金额：{target_amount}元")
         print(f"   可用时间：{available_time}分钟")
         print("═" * 50)
@@ -126,18 +125,18 @@ class AutoMoneyAssistant:
                 print(f"   链接：{opp['url']}")
                 print()
                 
-        print(f"📊 计划总结：")
+        print("📊 计划总结：")
         print(f"   预计总收入：{total_earnings:.1f}元")
         print(f"   预计总时间：{total_time}分钟")
         print(f"   预计效率：{total_earnings/total_time if total_time>0 else 0:.2f}元/分钟")
         
         if total_earnings >= target_amount:
-            print(f"✅ 可以达成目标！")
+            print("✅ 可以达成目标！")
         else:
-            print(f"⚠️  可能无法达成目标，建议：")
-            print(f"   1. 增加可用时间")
-            print(f"   2. 寻找更高报酬的机会")
-            print(f"   3. 同时进行多个任务")
+            print("⚠️  可能无法达成目标，建议：")
+            print("   1. 增加可用时间")
+            print("   2. 寻找更高报酬的机会")
+            print("   3. 同时进行多个任务")
             
         return plan
         
@@ -151,7 +150,7 @@ class AutoMoneyAssistant:
         
         for i, opp in enumerate(plan, 1):
             print(f"\n任务 {i}: {opp['title']}")
-            print(f"   尝试中...", end="")
+            print("   尝试中...", end="")
             time.sleep(1)
             
             # 模拟成功/失败
@@ -163,9 +162,9 @@ class AutoMoneyAssistant:
                 print(f"✅ 成功！赚取 {opp['reward']}")
             else:
                 actual_time += opp["time_value"] / 2  # 失败也花时间
-                print(f"❌ 失败，继续下一个")
+                print("❌ 失败，继续下一个")
                 
-        print(f"\n📈 模拟结果：")
+        print("\n📈 模拟结果：")
         print(f"   实际收入：{actual_earnings:.1f}元")
         print(f"   实际时间：{actual_time:.0f}分钟")
         
@@ -228,7 +227,7 @@ class AutoMoneyAssistant:
         with open("earning_report.json", "w", encoding="utf-8") as f:
             json.dump(report, f, ensure_ascii=False, indent=2)
             
-        print(f"\n📄 报告已保存到 earning_report.json")
+        print("\n📄 报告已保存到 earning_report.json")
         
 if __name__ == "__main__":
     assistant = AutoMoneyAssistant()

@@ -4,10 +4,8 @@
 提供更多高级功能和独家数据
 """
 
-import json
 import time
 import hashlib
-from datetime import datetime, timedelta
 import sys
 
 class PremiumMoneyMaster:
@@ -155,12 +153,12 @@ class PremiumMoneyMaster:
             print(f"   每月：{premium_income['monthly']['min']}-{premium_income['monthly']['max']}元")
             
             print("\n📈 投资回报分析：")
-            print(f"   高级版价格：5元")
-            print(f"   预计回本时间：1天")
+            print("   高级版价格：5元")
+            print("   预计回本时间：1天")
             print(f"   30天投资回报率：{(premium_income['monthly']['min'] - base_income['monthly']['min']) / 5 * 100:.0f}%")
         else:
             print("\n💡 升级建议：")
-            print(f"   投资5元升级高级版")
+            print("   投资5元升级高级版")
             print(f"   预计月收入增加：{150-5}=145元")
             print(f"   投资回报率：{(150-5)/5*100:.0f}%")
             
@@ -181,7 +179,7 @@ class PremiumMoneyMaster:
         
         print(f"金额：{payment_info['amount']}元")
         print(f"用途：{payment_info['purpose']}")
-        print(f"\n支付方式：")
+        print("\n支付方式：")
         print(f"1. 支付宝：{payment_info['alipay_qr']}")
         print(f"2. 微信支付：{payment_info['wechat_qr']}")
         print(f"\n{payment_info['instructions']}")
@@ -222,9 +220,9 @@ class PremiumMoneyMaster:
             
             if choice == 'y':
                 order_id = self.create_payment_qr()
-                print(f"\n🎉 感谢选择升级！")
+                print("\n🎉 感谢选择升级！")
                 print(f"   订单号：{order_id} 已记录")
-                print(f"   支付完成后，您将收到许可证密钥")
+                print("   支付完成后，您将收到许可证密钥")
                 
         print("\n" + "="*60)
         print("✨ 程序运行完成")
